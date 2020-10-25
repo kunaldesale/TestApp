@@ -1,0 +1,159 @@
+﻿@model IEnumerable<TestApplication.CompanyDetail>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@{
+    var tempval = "";
+    if (TempData["SummaryFileName"] != null)
+    {
+        tempval = TempData["SummaryFileName"].ToString();
+        //dispname = tempval.ToString();
+    }
+
+}
+<style>
+    #test-table {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #test-table td, #test-table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #test-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #test-table tr:hover {
+            background-color: #ddd;
+        }
+
+        #test-table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+</style>
+
+<h2>Company Detail List</h2>
+
+
+
+<div class="row" style="padding-bottom:10px;">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            @Html.ActionLink("Create Company", "Create", "Company", new { @class = "btn btn-warning" }) &nbsp;&nbsp;&nbsp;
+            <a href="#" class="btn btn-primary block btn-social " data-toggle="modal" data-target="#uploadstatecsv"><i class="fa fa-upload"></i>Upload Csv</a>
+            &nbsp;&nbsp;&nbsp;
+            @{
+                if (tempval != "")
+                {
+                    <button onclick="GetClientReport()" value="GetUplodSummary" class="btn btn-danger">GetUplodSummary</button>
+                    <input type="hidden" id="fileName" value="@tempval" />
+                }
+                else
+                {
+                    <button onclick="NoSummaryAvailable()" value="GetUplodSummary" class="btn btn-success">GetUplodSummary</button>
+                }
+            }
+
+
+        </div>
+    </div>
+</div>
+
+<table class="fulltable fulltable-editable" id="test-table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GSTIN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TurnOverAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContactNumber)
+        </th>
+        <th></th>
+    </tr>
+    
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GSTIN)
+            </td>
+            <td>
+                @{
+                    var startDate = item.StartDate?.ToString("dd-MM-yyyy");
+                    if (startDate == null)
+                    {
+                        startDate = "-";
+                    }
+                }
+                <text>@startDate</text>
+            </td>
+            <td>
+                @{
+                    var endDate = item.EndDate?.ToString("dd-MM-yyyy");
+                    if (endDate == null)
+                    {
+                        endDate = "-";
+                    }
+                }
+                <text>@endDate</text>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TurnOverAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNumber)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.Partial("_uploadFile")
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+
+    function GetClientReport() {
+        debugger;
+        var filename = $('#fileName').val();
+        window.open("/Company/GetReport?fName=" + filename, "_blank");
+    }
+
+    function NoSummaryAvailable() {
+        alert("No summary available for latest upload");
+    }
+</script>

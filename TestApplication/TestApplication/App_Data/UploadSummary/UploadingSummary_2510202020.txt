@@ -1,0 +1,2 @@
+Entry for Line 1 -  GStNo length less than 15. ,  Start date not available. ,  Email already in use.
+Entry for Line 2 -  Email already in use. ,  Phone number already in use. ,  GST number already in use.

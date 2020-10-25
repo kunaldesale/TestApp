@@ -1,0 +1,29 @@
+﻿@using (Html.BeginForm("uploadparamatercsv", "Company", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="modal fade" id="uploadstatecsv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header modal-header-info">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    <h3><i class="fa fa-upload"></i> Upload CSV </h3>
+                </div>
+
+
+                <div class="modal-body">
+                    <div class="editor-field">
+                        <input type="file" name="uploadfile" id='Uploadroutcsv' />
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-flat">Upload CSV</button>
+                    <button type="button" class="btn btn-default" onclick='cancelcsv()' id="submitBtn" data-dismiss="modal">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
